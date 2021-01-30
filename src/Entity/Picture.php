@@ -22,12 +22,12 @@ class Picture
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text")
      */
     private $title;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -60,6 +60,16 @@ class Picture
      * @ORM\Column(type="string", length=100, unique=true)
      */
     private $unsplashId;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $downloads;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photographer;
 
     public function __construct()
     {
@@ -178,6 +188,30 @@ class Picture
     public function setUnsplashId(string $unsplashId): self
     {
         $this->unsplashId = $unsplashId;
+
+        return $this;
+    }
+
+    public function getDownloads(): ?int
+    {
+        return $this->downloads;
+    }
+
+    public function setDownloads(?int $downloads): self
+    {
+        $this->downloads = $downloads;
+
+        return $this;
+    }
+
+    public function getPhotographer(): ?string
+    {
+        return $this->photographer;
+    }
+
+    public function setPhotographer(?string $photographer): self
+    {
+        $this->photographer = $photographer;
 
         return $this;
     }
