@@ -1,0 +1,48 @@
+h1, h2 {
+    margin-top: 0;
+}
+
+/* images responsives */
+img {
+    max-width: 100%;
+}
+
+/* grille de photos */
+.pic-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+/* zone noire autours des photos dans la grille */
+.pic-list a {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    background-color: #000;
+    padding: 10px;
+}
+
+/* 2 colonnes sur la page détail */
+.pic-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* autours du form */
+.search-form-container {
+    border: 1px solid #CCC;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+}
+
+footer {
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 20px;
+}

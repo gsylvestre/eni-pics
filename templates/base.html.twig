@@ -2,12 +2,18 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-
-        {% block javascripts %}{% endblock %}
+        <title>{% block title %}Pictures!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+            <h1><a href="{{ path('picture_home') }}" title="Back home">Pictures!</a></h1>
+        </header>
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+        <footer>
+            <div>bla bla bla</div>
+        </footer>
     </body>
 </html>

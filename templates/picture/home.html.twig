@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <div class="search-form-container">
+        {{ form(searchForm) }}
+    </div>
+
+    <section class="pic-list">
+
+        {% for picture in pictures %}
+
+            <a href="{{ path('picture_detail', {'id': picture.id}) }}" title="View pic detail">
+                <img src="{{ picture.smallUrl }}" class="pic" alt="{{ picture.title }}">
+            </a>
+
+        {% endfor %}
+
+    </section>
+{% endblock %}

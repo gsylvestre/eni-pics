@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="pic-detail">
+
+        <div>
+            <a href="{{ picture.bigUrl }}" title="View full size img" target="_blank">
+                <img src="{{ picture.bigUrl }}" class="pic" alt="{{ picture.title }}">
+            </a>
+        </div>
+
+        <div>
+            <h2>{{ picture.title }}</h2>
+            <div>{{ picture.description }}</div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block title %}
+    {{ picture.title }}
+{% endblock %}
+
