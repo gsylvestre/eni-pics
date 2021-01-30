@@ -172,6 +172,7 @@ class GetUnsplashDataCommand extends Command
                 $tag->setName($tagData['title']);
 
                 $this->entityManager->persist($tag);
+                $this->io->writeln('New tag: ' . $tag->getName());
 
                 //associe ce nouveau tag à cette photo
                 $picture->addTag($tag);
@@ -184,6 +185,7 @@ class GetUnsplashDataCommand extends Command
             $this->entityManager->flush();
 
             //on attend deux MINUTES parce qu'on a droit à seulement 50 requêtes par heure :(
+            $this->io->writeln('waiting 2 minutes :(');
             sleep(120);
         }
     }
