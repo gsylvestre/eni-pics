@@ -201,3 +201,5 @@ Idem pour les downloads ! Ajoutez encore un champ !
 ## D'autres idées ?
  
 Venez-me voir pour les proposer, je pourrais vous indiquer leur niveau de difficulté ! 
+
+Vous pourriez par exemple faire le reste du CRUD sur les photos : permettre leur suppression, leur ajout, leur modification, etc...
