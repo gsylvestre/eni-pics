@@ -11,7 +11,7 @@ Vous devez installer son projet.  Deux options :
 
 <summary>Procédure</summary>
 
-- récupérez le .zip fourni dans Teams et dézippez le dans votre www/
+- récupérez le eni-pics.zip fourni dans Teams et dézippez le dans votre www/
 - dans PHPMyAdmin, importez la bdd fournie (fichier eni_pics.sql dans le zip)
 
 </details>
