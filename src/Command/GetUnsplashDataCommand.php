@@ -43,8 +43,9 @@ class GetUnsplashDataCommand extends Command
      */
     private $tagRepository;
 
-    //ma clé d'api, devrait être stocké genre dans .env.local pour être privé
-    const API_KEY = "mItBPL5udgEhRaz_YYlXNQr9BmGtjthBrKJQYrahVXw";
+    //clé d'api, devrait être stocké genre dans .env.local pour être privée
+    //je désactivé la mienne sur unsplash
+    const API_KEY = "";
 
 
     public function __construct(
@@ -71,6 +72,11 @@ class GetUnsplashDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
+
+        if (self::API_KEY === ""){
+            $this->io->error("Vous devez renseigner votre API_KEY !");
+            return Command::FAILURE;
+        }
 
         //déjà on récupère des photos
         $this->getPictures();

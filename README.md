@@ -15,6 +15,5 @@ Y configurer la connexion à la base de donnée, puis dans le terminal :
 
 ```
 php bin/console doctrine:database:create
-php bin/console doctrine:schema:update --force
 php bin/console app:import-data
 ```
