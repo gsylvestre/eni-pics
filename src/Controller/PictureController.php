@@ -27,8 +27,11 @@ class PictureController extends AbstractController
         $data = $searchForm->getData();
         dump($data);
 
-        //récupère les photos (limit à 30 ici)
-        $pictures = $pictureRepository->findBy([], [], 30);
+        //récupère le tri sélectionné dans le formulaire
+        $orderBy = (empty($data['sort'])) ? 'id' : $data['sort'];
+
+        //utilise le second argument pour trier !
+        $pictures = $pictureRepository->findBy([], [$orderBy => 'DESC'], 30);
 
         return $this->render('picture/home.html.twig', [
             'pictures' => $pictures,
