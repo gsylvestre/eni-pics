@@ -4,7 +4,26 @@
 
 {% block body %}
     <div class="search-form-container">
-        {{ form(searchForm) }}
+        {# configure le formulaire pour toujours revenir à la page 1 sur soumission #}
+        {{ form(searchForm, {attr: {action: path('picture_home', {page: 1})}}) }}
+    </div>
+
+    <div class="pagination-infos">
+        <div>Page #{{ page }}</div>
+
+        {# doit-on afficher le lien vers la page précédente ? oui si on est sur la page 2 ou plus ! #}
+        {% set showPrevPageLink = page > 1 %}
+
+        {% if showPrevPageLink %}
+            <a href="{{ path('picture_home', {'page': page-1}) }}">Prev page</a>
+        {% endif %}
+
+        {# et celui de la page suivante ? si le numéro du dernier résultat affiché est plus petit que le nb total ! #}
+        {% set showNextPageLink = (numberOfResultsPerPage * page) < totalResultsCount %}
+
+        {% if showNextPageLink %}
+            <a href="{{ path('picture_home', {'page': page+1}) }}">Next page</a>
+        {% endif %}
     </div>
 
     <section class="pic-list">
