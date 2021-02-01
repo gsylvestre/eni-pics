@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\SearchPictureType;
 use App\Repository\PictureRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,6 +88,20 @@ class PictureController extends AbstractController
 
         return $this->render('picture/photographer_pictures.html.twig', [
             'pictures' => $pictures
+        ]);
+    }
+
+    /**
+     * Affiche les photos associées à un tag
+     * @Route("/tag/{id}", name="pictures_by_tag")
+     */
+    public function picturesByTag(int $id, TagRepository $tagRepository): Response
+    {
+        //récupère le tag (il contient toutes les photos associées !)
+        $tag = $tagRepository->find($id);
+
+        return $this->render('picture/pictures_by_tag.html.twig', [
+            'tag' => $tag
         ]);
     }
 }

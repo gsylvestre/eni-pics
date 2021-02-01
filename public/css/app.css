@@ -63,3 +63,13 @@ footer {
     display: block;
     padding: 4px 2px;
 }
+
+.tag-link {
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 3px 5px;
+    display: inline-block;
+    margin: 2px 4px;
+    text-decoration: none;
+    color: inherit;
+}
