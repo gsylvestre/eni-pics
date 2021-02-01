@@ -31,12 +31,12 @@ class PictureController extends AbstractController
         dump($data);
 
         //récupère les photos (limit à 30 ici)
-        $data = $pictureRepository->search($data['keyword'], $page);
+        $resultsData = $pictureRepository->search($data['keyword'], $data['minLikes'], $data['minDownloads'], $page);
 
         return $this->render('picture/home.html.twig', [
-            'pictures' => $data['results'],
-            'totalResultsCount' => $data['totalResultsCount'],
-            'numberOfResultsPerPage' => $data['numberOfResultsPerPage'],
+            'pictures' => $resultsData['results'],
+            'totalResultsCount' => $resultsData['totalResultsCount'],
+            'numberOfResultsPerPage' => $resultsData['numberOfResultsPerPage'],
             'searchForm' => $searchForm->createView(),
             'page' => $page //on passe la page actuelle à Twig pour nous aider à afficher un lien vers "Next page"
         ]);

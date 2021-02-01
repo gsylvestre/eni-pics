@@ -19,7 +19,7 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
-    public function search(string $keywords = null, int $page = 1)
+    public function search(string $keywords = null, ?int $minLikes = 0, ?int $minDownloads = 0, int $page = 1)
     {
 
         //nombre de photos à afficher par page
@@ -45,6 +45,20 @@ class PictureRepository extends ServiceEntityRepository
                 $queryBuilder->orWhere("p.title LIKE :kw$i OR p.description LIKE :kw$i")
                     ->setParameter(":kw$i", "%". $keywordsArray[$i] ."%");
             }
+        }
+
+        //si on a reçu un nombre de likes minimum...
+        if ($minLikes){
+            //on ajoute alors une clause where
+            $queryBuilder->andWhere('p.likes > :minLikes')
+                ->setParameter(':minLikes', $minLikes);
+        }
+
+        //si on a un nombre de téléchargements mini
+        if ($minDownloads){
+            //nouvelle clause where
+            $queryBuilder->andWhere('p.downloads > :minDownloads')
+                ->setParameter(':minDownloads', $minDownloads);
         }
 
         //nombre max par page

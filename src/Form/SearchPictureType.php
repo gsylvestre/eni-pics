@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,6 +18,15 @@ class SearchPictureType extends AbstractType
             //champ de recherche par mot-clé
             ->add('keyword', SearchType::class, [
                 'label' => 'Search',
+                'required' => false,
+            ])
+            ->add('minLikes', NumberType::class, [
+                'label' => 'Minimum likes',
+                'required' => false,
+            ])
+            ->add('minDownloads', NumberType::class, [
+                'label' => 'Minimum downloads',
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, ['label' => 'GO'])
 
