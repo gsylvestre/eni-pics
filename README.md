@@ -43,7 +43,7 @@ php bin/console app:import-data
 </details>  
 
 #### Ensuite...
-Naviguez vers http://localhost/eni_pics/public/ et vous devriez voir le site. Le formulaire n'est pas encore fonctionnel, c'est normal. 
+Naviguez vers http://localhost/eni-pics/public/ et vous devriez voir le site. Le formulaire n'est pas encore fonctionnel, c'est normal. 
 
 Voici ci-dessous ce qu'il reste à faire... L'ordre n'est pas important, faites-en une ou plus, peu importe, vous ne pouvez pas tout faire... Toutes les tâches qui restent sont reliées à Doctrine, aux entités et aux requêtes !
 
