@@ -11,6 +11,7 @@
 
         <div>
             <h2>{{ picture.title }}</h2>
+            <div>By <a href="{{ path('photographer_pictures', {'name': picture.photographer|url_encode}) }}">{{ picture.photographer }}</a></div>
             <div>{{ picture.description }}</div>
         </div>
 

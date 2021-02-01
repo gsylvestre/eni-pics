@@ -19,32 +19,23 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
-    // /**
-    //  * @return Picture[] Returns an array of Picture objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findPhotographer(string $name): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        //on cherche des photographes "distinct" dans la table des photos
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder->select('DISTINCT(p.photographer)');
 
-    /*
-    public function findOneBySomeField($value): ?Picture
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        //en fonction du nom reçu en argument
+        $queryBuilder->andWhere('p.photographer LIKE :photographer')
+            ->setParameter(':photographer', "%" . $name . "%");
+
+        $query = $queryBuilder->getQuery();
+        $query->setMaxResults(15);
+
+        //on récupère les données sous forme de tableau
+        $result = $query->getArrayResult();
+
+        //il y a trop de niveaux de tableaux... je ne garde que ce qui est sous la clé "1" dans les sous-tableaux
+        return array_column($result, "1");
     }
-    */
 }
