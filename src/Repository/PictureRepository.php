@@ -19,32 +19,24 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
-    // /**
-    //  * @return Picture[] Returns an array of Picture objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function search(string $keywords = null)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        //crée notre querybuilder avec un alias de p pour Picture
+        $queryBuilder = $this->createQueryBuilder('p');
 
-    /*
-    public function findOneBySomeField($value): ?Picture
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        //seulement si on a reçu des mots-clefs...
+        if ($keywords) {
+            $queryBuilder->andWhere('p.title LIKE :kw OR p.description LIKE :kw')
+                    ->setParameter(':kw', "%$keywords%");
+        }
+
+        //limite à 30 résultats
+        $queryBuilder->setMaxResults(30);
+
+        //récupère l'objet Query
+        $query = $queryBuilder->getQuery();
+
+        //retourne les résultats
+        return $query->getResult();
     }
-    */
 }

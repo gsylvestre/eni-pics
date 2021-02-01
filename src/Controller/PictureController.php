@@ -28,7 +28,7 @@ class PictureController extends AbstractController
         dump($data);
 
         //récupère les photos (limit à 30 ici)
-        $pictures = $pictureRepository->findBy([], [], 30);
+        $pictures = $pictureRepository->search($data['keyword']);
 
         return $this->render('picture/home.html.twig', [
             'pictures' => $pictures,
