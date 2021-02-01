@@ -19,7 +19,7 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
-    public function search(string $keywords = null)
+    public function search(?string $keywords = null, ?int $minLikes = 0, ?int $minDownloads = 0)
     {
         //crée notre querybuilder avec un alias de p pour Picture
         $queryBuilder = $this->createQueryBuilder('p');
@@ -36,6 +36,20 @@ class PictureRepository extends ServiceEntityRepository
                 $queryBuilder->orWhere("p.title LIKE :kw$i OR p.description LIKE :kw$i")
                     ->setParameter(":kw$i", "%". $keywordsArray[$i] ."%");
             }
+        }
+
+        //si on a reçu un nombre de likes minimum...
+        if ($minLikes){
+            //on ajoute alors une clause where
+            $queryBuilder->andWhere('p.likes > :minLikes')
+                ->setParameter(':minLikes', $minLikes);
+        }
+
+        //si on a un nombre de téléchargements mini
+        if ($minDownloads){
+            //nouvelle clause where
+            $queryBuilder->andWhere('p.downloads > :minDownloads')
+                ->setParameter(':minDownloads', $minDownloads);
         }
 
         //limite à 30 résultats
