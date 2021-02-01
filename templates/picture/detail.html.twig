@@ -12,6 +12,11 @@
         <div>
             <h2>{{ picture.title }}</h2>
             <div>{{ picture.description }}</div>
+
+            <h3>Tagged with:</h3>
+            {% for tag in picture.tags %}
+                <a href="#" class="tag-link" title="View all pics tagged with {{ tag.name }}">{{ tag.name }}</a>
+            {% endfor %}
         </div>
 
     </div>
