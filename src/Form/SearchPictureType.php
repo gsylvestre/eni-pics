@@ -39,17 +39,22 @@ class SearchPictureType extends AbstractType
                     'Most recent first' => 'createdAt',
                 ]
             ])
-            ->add('submit', SubmitType::class, ['label' => 'GO'])
 
             //les form de recherche sont en GET !
             ->setMethod("GET")
         ;
     }
 
+    //pour avoir des noms de champs plus simple, pour que l'URL soit plus jolie !
+    public function getBlockPrefix()
+    {
+        return "";
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'csrf_protection' => false //pas utile ici et ça me pourrit l'URL
         ]);
     }
 }

@@ -5,8 +5,10 @@
 {% block body %}
     <div class="search-form-container">
         {# configure le formulaire pour toujours revenir à la page 1 sur soumission #}
-        {{ form(searchForm, {attr: {action: path('picture_home', {page: 1})}}) }}
-
+        {{ form_start(searchForm, {attr: {action: path('picture_home', {page: 1})}}) }}
+        {{ form_widget(searchForm) }}
+        <button>OK</button>
+        {{ form_end(searchForm) }}
 
         {# ici je fais mon form en HTML, le form symfony ne m'apporterait vraiment rien #}
         <form id="photographer-form" action="{{ path('search_photographer') }}">
