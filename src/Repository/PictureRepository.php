@@ -26,8 +26,16 @@ class PictureRepository extends ServiceEntityRepository
 
         //seulement si on a reçu des mots-clefs...
         if ($keywords) {
-            $queryBuilder->andWhere('p.title LIKE :kw OR p.description LIKE :kw')
-                    ->setParameter(':kw', "%$keywords%");
+            //on sépare chaque mot-clef tapé dans un tableau
+            $keywordsArray = explode(" ", $keywords);
+            dump($keywordsArray);
+
+            //on ajoute un where en mode OR pour chaque mot-clef
+            for ($i = 0; $i < count($keywordsArray); $i++) {
+                //on doit créer des paramètres avec des noms différents ici, d'où le $i...
+                $queryBuilder->orWhere("p.title LIKE :kw$i OR p.description LIKE :kw$i")
+                    ->setParameter(":kw$i", "%". $keywordsArray[$i] ."%");
+            }
         }
 
         //limite à 30 résultats
