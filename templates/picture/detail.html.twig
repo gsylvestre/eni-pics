@@ -15,6 +15,18 @@
         </div>
 
     </div>
+
+    <h3>Similar pictures: </h3>
+    <div class="similar-pics pic-list">
+        {% for picture in similarPictures %}
+
+            <a href="{{ path('picture_detail', {'id': picture.id}) }}" title="View pic detail">
+                <img src="{{ picture.smallUrl }}" class="pic" alt="{{ picture.title }}">
+            </a>
+
+        {% endfor %}
+
+    </div>
 {% endblock %}
 
 {% block title %}

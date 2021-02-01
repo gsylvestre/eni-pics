@@ -45,8 +45,13 @@ class PictureController extends AbstractController
         //récupère la photo dont l'id est dans l'URL
         $picture = $pictureRepository->find($id);
 
+        //récupère des photos similaires en fonction des tags
+        $similarPictures = $pictureRepository->findSimilarPictures($picture);
+        dump($similarPictures);
+
         return $this->render('picture/detail.html.twig', [
-            'picture' => $picture
+            'picture' => $picture,
+            'similarPictures' => $similarPictures
         ]);
     }
 }

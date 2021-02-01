@@ -19,32 +19,38 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
-    // /**
-    //  * @return Picture[] Returns an array of Picture objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Retourne des photos contenant l'un ou l'autre des tags de la photo reçue en argument
+     *
+     * @param Picture $picture
+     * @return int|mixed|string
+     */
+    public function findSimilarPictures(Picture $picture)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $queryBuilder = $this->createQueryBuilder('p');
 
-    /*
-    public function findOneBySomeField($value): ?Picture
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        //jointure sur les tags pour accéder à l'alias plus loin
+        $queryBuilder->join('p.tags', 't');
+
+        //fait un WHERE IN en passant directement le tableau de tags !
+        //doctrine va se débrouiller avec les ids tout seul
+        $queryBuilder->andWhere('t.id IN (:tagIds)')->setParameter(':tagIds', $picture->getTags());
+
+        //exclut la photo actuelle des résultats
+        $queryBuilder->andWhere('p != :currentPic')->setParameter(':currentPic', $picture);
+
+        //200 photos max... c'est bcp, mais on ne va en garder que 20 au hasard,
+        //pour que ça change, sinon c'est toujours les mêmes...
+        $queryBuilder->setMaxResults(200);
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+
+        //on les mélange
+        shuffle($results);
+        //on n'en garde que 20
+        $pics = array_splice($results, 0, 20);
+
+        return $pics;
     }
-    */
 }
