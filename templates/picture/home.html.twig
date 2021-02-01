@@ -6,6 +6,30 @@
     <div class="search-form-container">
         {# configure le formulaire pour toujours revenir à la page 1 sur soumission #}
         {{ form(searchForm, {attr: {action: path('picture_home', {page: 1})}}) }}
+
+
+        {# ici je fais mon form en HTML, le form symfony ne m'apporterait vraiment rien #}
+        <form id="photographer-form" action="{{ path('search_photographer') }}">
+            <label for="photographer-input">Search for a photographer:</label>
+            <input type="search" name="photographer" id="photographer-input" placeholder="mary">
+            <div id="photographer-results-container"></div>
+        </form>
+
+        <script>
+            //quand on écrit une lettre dans le champ
+            $("#photographer-input").on("keyup", function(){
+                $.ajax({
+                    url: $("#photographer-form").attr("action"),
+                    data: {
+                        "photographer": $("#photographer-input").val()
+                    }
+                })
+                    .done(function(response){
+                        console.log(response);
+                        $("#photographer-results-container").html(response);
+                    });
+            });
+        </script>
     </div>
 
     <div class="pagination-infos">

@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Picture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -84,5 +83,28 @@ class PictureRepository extends ServiceEntityRepository
         ];
 
         return $data;
+    }
+
+    /**
+     * trouve les photographes en fonction de leur nom
+     */
+    public function findPhotographer(string $name): array
+    {
+        //on cherche des photographes "distinct" dans la table des photos
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder->select('DISTINCT(p.photographer)');
+
+        //en fonction du nom reçu en argument
+        $queryBuilder->andWhere('p.photographer LIKE :photographer')
+            ->setParameter(':photographer', "%" . $name . "%");
+
+        $query = $queryBuilder->getQuery();
+        $query->setMaxResults(15);
+
+        //on récupère les données sous forme de tableau
+        $result = $query->getArrayResult();
+
+        //il y a trop de niveaux de tableaux... je ne garde que ce qui est sous la clé "1" dans les sous-tableaux
+        return array_column($result, "1");
     }
 }

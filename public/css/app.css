@@ -35,6 +35,8 @@ img {
     border: 1px solid #CCC;
     padding: 10px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 label {
@@ -45,4 +47,19 @@ footer {
     padding: 20px 0;
     text-align: center;
     margin-top: 20px;
+}
+
+#photographer-results-container {
+    position: absolute;
+}
+
+#photographer-results-container ul {
+    list-style: none;
+    background-color: rgba(255,255,255,0.9);
+    padding: 5px;
+}
+
+#photographer-results-container a {
+    display: block;
+    padding: 4px 2px;
 }

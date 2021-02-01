@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\SearchPictureType;
 use App\Repository\PictureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,6 +53,35 @@ class PictureController extends AbstractController
 
         return $this->render('picture/detail.html.twig', [
             'picture' => $picture
+        ]);
+    }
+
+    /**
+     * Recherche d'un photographe, méthode appelée en AJAX
+     * @Route("/photographer/search", name="search_photographer")
+     */
+    public function searchPhotographer(PictureRepository $pictureRepository, Request $request): Response
+    {
+        $searchedName = $request->query->get('photographer');
+
+        $photographerNames = $pictureRepository->findPhotographer($searchedName);
+
+        return $this->render('picture/photographer_ajax_search_results.html.twig', [
+            'photographerNames' => $photographerNames,
+        ]);
+    }
+
+
+    /**
+     * Photos d'un photographe
+     * @Route("/photographer/{name}", name="photographer_pictures")
+     */
+    public function photographerPictures(PictureRepository $pictureRepository, string $name): Response
+    {
+        $pictures = $pictureRepository->findBy(['photographer' => urldecode($name)]);
+
+        return $this->render('picture/photographer_pictures.html.twig', [
+            'pictures' => $pictures
         ]);
     }
 }

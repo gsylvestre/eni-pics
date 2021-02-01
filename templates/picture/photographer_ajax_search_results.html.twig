@@ -1,0 +1,8 @@
+{# ici on extends rien du tout !
+c'est juste pour générer l'affichage de la requête ajax, soit un bout de HTML seulement #}
+
+<ul class="photographer-suggestions">
+{% for name in photographerNames %}
+    <li><a href="{{ path('photographer_pictures', {'name': name|url_encode}) }}">{{ name }}</a></li>
+{% endfor %}
+</ul>
