@@ -15,7 +15,7 @@
 
             <h3>Tagged with:</h3>
             {% for tag in picture.tags %}
-                <a href="#" class="tag-link" title="View all pics tagged with {{ tag.name }}">{{ tag.name }}</a>
+                <a href="{{ path('pictures_by_tag', {'id': tag.id}) }}" class="tag-link" title="View all pics tagged with {{ tag.name }}">{{ tag.name }}</a>
             {% endfor %}
         </div>
 
