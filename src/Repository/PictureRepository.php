@@ -44,7 +44,30 @@ class PictureRepository extends ServiceEntityRepository
         //récupère l'objet Query de Doctrine
         $query = $queryBuilder->getQuery();
 
-        //pas vraiment utile d'utiliser le Paginator ici parce que je fais pas la jointure sur les tags
-        return $query->getResult();
+        //nos résultats pour cette page
+        $result = $query->getResult();
+
+        //ici, on souhaite connaître le nombre total de résultats SI on n'utilisait pas de limite
+        //c'est utile pour savoir si on doit afficher le bouton vers la page suivante ou pas !
+        //et aussi pour afficher à l'utilisateur le nombre total de résultats tout simplement...
+        //pour faire ça, le plus simple est de modifier notre queryBuilder :
+
+        //on enlève la limit et l'offset
+        $queryBuilder->setMaxResults(null)->setFirstResult(null);
+        //on ne sélectionne que le nombre total de résultat
+        $queryBuilder->select('COUNT(p.id)');
+        //on appelle cette méthode qui nous retourne directement le résultat, sans tableau autour
+        $totalResultsCount = (int) $queryBuilder->getQuery()->getSingleScalarResult();
+
+        //puisqu'on a plusieurs valeurs à return depuis la fonction, on met tout ça dans un tableau
+        //toutes ces données sont utiles pour l'affichage des liens et des infos de pagination dans twig
+        $data = [
+            "numberOfResultsPerPage" => $numberOfPicturesPerPage,
+            "totalResultsCount" => $totalResultsCount,
+            "currentPage" => $page,
+            "results" => $query->getResult(),
+        ];
+
+        return $data;
     }
 }

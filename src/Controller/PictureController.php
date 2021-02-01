@@ -31,10 +31,14 @@ class PictureController extends AbstractController
 
         //récupère les photos paginée (voir la méthode dans le PictureRepository)
         //on lui passe le numéro de page, et le reste du traitement se fera là-bas
-        $pictures = $pictureRepository->findPaginatedPictures($page);
+        //on reçoit maintenant un tableau associatif avec des infos sur la pagination
+        $data = $pictureRepository->findPaginatedPictures($page);
+
 
         return $this->render('picture/home.html.twig', [
-            'pictures' => $pictures,
+            'pictures' => $data['results'],
+            'totalResultsCount' => $data['totalResultsCount'],
+            'numberOfResultsPerPage' => $data['numberOfResultsPerPage'],
             'searchForm' => $searchForm->createView(),
             'page' => $page //on passe la page actuelle à Twig pour nous aider à afficher un lien vers "Next page"
         ]);
