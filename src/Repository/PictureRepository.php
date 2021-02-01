@@ -19,7 +19,7 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
-    public function search(string $keywords = null, ?int $minLikes = 0, ?int $minDownloads = 0, int $page = 1)
+    public function search(string $keywords = null, ?int $minLikes = 0, ?int $minDownloads = 0, string $sort = "id", int $page = 1)
     {
 
         //nombre de photos à afficher par page
@@ -67,7 +67,7 @@ class PictureRepository extends ServiceEntityRepository
         $queryBuilder->setFirstResult($offset);
 
         //on tri, ici arbitrairement sur les likes
-        $queryBuilder->addOrderBy('p.likes', 'DESC');
+        $queryBuilder->addOrderBy('p.'.$sort, 'DESC');
 
         //récupère l'objet Query de Doctrine
         $query = $queryBuilder->getQuery();
