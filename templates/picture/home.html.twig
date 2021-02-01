@@ -41,14 +41,22 @@
         {% set showPrevPageLink = page > 1 %}
 
         {% if showPrevPageLink %}
-            <a href="{{ path('picture_home', {'page': page-1}) }}">Prev page</a>
+            {% set urlParams = formData %}
+            {% if urlParams is not null %}
+                {% set urlParams = urlParams|merge({'page': page-1}) %}
+            {% endif %}
+            <a href="{{ path('picture_home', urlParams) }}">Prev page</a>
         {% endif %}
 
         {# et celui de la page suivante ? si le numéro du dernier résultat affiché est plus petit que le nb total ! #}
         {% set showNextPageLink = (numberOfResultsPerPage * page) < totalResultsCount %}
 
         {% if showNextPageLink %}
-            <a href="{{ path('picture_home', {'page': page+1}) }}">Next page</a>
+            {% set urlParams = formData %}
+            {% if urlParams is not null %}
+                {% set urlParams = urlParams|merge({'page': page+1}) %}
+            {% endif %}
+            <a href="{{ path('picture_home', urlParams) }}">Next page</a>
         {% endif %}
     </div>
 

@@ -29,7 +29,6 @@ class PictureController extends AbstractController
 
         //les données du form sont là (s'il a été soumis)
         $data = $searchForm->getData();
-        dump($data);
 
         //récupère le tri sélectionné dans le formulaire
         $orderBy = (empty($data['sort'])) ? 'id' : $data['sort'];
@@ -40,11 +39,15 @@ class PictureController extends AbstractController
         //récupère les photos (limit à 30 ici)
         $resultsData = $pictureRepository->search($data['keyword'], $data['minLikes'], $data['minDownloads'], $orderBy, $page);
 
+        //petit hack dégueu pour éviter des erreurs twig reloues
+        $data['page'] = $page;
+
         return $this->render('picture/home.html.twig', [
             'pictures' => $resultsData['results'],
             'totalResultsCount' => $resultsData['totalResultsCount'],
             'numberOfResultsPerPage' => $resultsData['numberOfResultsPerPage'],
             'searchForm' => $searchForm->createView(),
+            'formData' => $data, //utile pour passer les paramètres d'URL de page en page avec la pagination
             'page' => $page //on passe la page actuelle à Twig pour nous aider à afficher un lien vers "Next page"
         ]);
     }
