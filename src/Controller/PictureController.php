@@ -13,9 +13,11 @@ class PictureController extends AbstractController
 {
     /**
      * Affiche la liste des photos et le formulaire de recherche
-     * @Route("/", name="picture_home")
+     * L'URL accepte un paramètre optionnel de numéro de page (égal à 1 si absent)
+     *
+     * @Route("/{page}", name="picture_home", requirements={"page": "\d+"}, defaults={"page": 1})
      */
-    public function home(PictureRepository $pictureRepository, Request $request): Response
+    public function home(PictureRepository $pictureRepository, Request $request, int $page = 1): Response
     {
         //crée une instance du formulaire de recherche (il n'est pas associé à une entité)
         $searchForm = $this->createForm(SearchPictureType::class);
@@ -27,12 +29,14 @@ class PictureController extends AbstractController
         $data = $searchForm->getData();
         dump($data);
 
-        //récupère les photos (limit à 30 ici)
-        $pictures = $pictureRepository->findBy([], [], 30);
+        //récupère les photos paginée (voir la méthode dans le PictureRepository)
+        //on lui passe le numéro de page, et le reste du traitement se fera là-bas
+        $pictures = $pictureRepository->findPaginatedPictures($page);
 
         return $this->render('picture/home.html.twig', [
             'pictures' => $pictures,
-            'searchForm' => $searchForm->createView()
+            'searchForm' => $searchForm->createView(),
+            'page' => $page //on passe la page actuelle à Twig pour nous aider à afficher un lien vers "Next page"
         ]);
     }
 

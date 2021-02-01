@@ -7,6 +7,11 @@
         {{ form(searchForm) }}
     </div>
 
+    <div class="pagination-infos">
+        <div>Page {{ page }}</div>
+        <a href="{{ path('picture_home', {'page': page+1}) }}">Next page</a>
+    </div>
+
     <section class="pic-list">
 
         {% for picture in pictures %}
